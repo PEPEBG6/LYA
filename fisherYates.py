@@ -1,5 +1,4 @@
 from random import randrange
-import tkinter as tk
 
 def swap(A, i, j):
     temp = A[i]
@@ -11,33 +10,22 @@ def shuffle(A):
         j = randrange(i, len(A))
         swap(A, i, j)
 
-def ingresar_datos():
+if __name__ == '__main__':
+    # Crear un array vacío
     datos = []
+
+    # Pedir al usuario la cantidad de datos que desea ingresar
     num_datos = int(input("Ingrese la cantidad de datos que desea agregar: "))
 
+    # Pedir al usuario ingresar los datos uno por uno
     for i in range(num_datos):
         dato = int(input(f"Ingrese el dato {i + 1}: "))
         datos.append(dato)
 
-    return datos
-
-def mostrar_ventana(datos):
-    ventana = tk.Tk()
-    ventana.title("Datos Aleatorios")
-
-    etiqueta = tk.Label(ventana, text="Datos aleatorios:")
-    etiqueta.pack()
-
-    for dato in datos:
-        etiqueta_dato = tk.Label(ventana, text=str(dato))
-        etiqueta_dato.pack()
-
-    ventana.mainloop()
-
-if __name__ == '__main__':
-    datos = ingresar_datos()
-
+    # Mezclar los datos aleatoriamente
     shuffle(datos)
 
-    mostrar_ventana(datos)
-
+    # Imprimir los datos aleatorios
+    print("Datos aleatorios:")
+    for dato in datos:
+        print(dato)
