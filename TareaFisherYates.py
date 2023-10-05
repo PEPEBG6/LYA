@@ -11,22 +11,38 @@ def shuffle_deck():
 def deal_cards():
     global deck
     num_players = int(player_entry.get())
-    players = [[] for _ in range(num_players)]
+    
+    if 2 <= num_players <= 4:
+        players = [[] for _ in range(num_players)]
 
-    for _ in range(7):
-        for player in players:
-            card = deck.pop()
-            player.append(card)
+        for _ in range(7):
+            for player in players:
+                card = deck.pop()
+                player.append(card)
 
-    for player_index, player_hand in enumerate(players):
+        for player_index, player_hand in enumerate(players):
+            result_label.config(state=tk.NORMAL)
+            result_label.insert(tk.END, f"Jugador {player_index + 1}: {', '.join(player_hand)}\n")
+            result_label.see(tk.END)
+            result_label.config(state=tk.DISABLED)
+
+        if deck:
+            next_card_label.config(text=f"Carta siguiente: {deck[-1]}")
+            root.after(1000, deal_next_card)
+        else:
+            next_card_label.config(text="No quedan más cartas en el mazo.")
+    else:
         result_label.config(state=tk.NORMAL)
-        result_label.insert(tk.END, f"Jugador {player_index + 1}: {', '.join(player_hand)}\n")
-        result_label.see(tk.END)
+        result_label.delete('1.0', tk.END)
+        result_label.insert(tk.END, "El número de jugadores debe estar entre 2 y 4.\n")
         result_label.config(state=tk.DISABLED)
 
+def deal_next_card():
+    global deck
     if deck:
-        next_card = deck.pop()
-        next_card_label.config(text=f"Carta siguiente: {next_card}")
+        card = deck.pop()
+        next_card_label.config(text=f"Carta siguiente: {card}")
+        root.after(1000, deal_next_card)
     else:
         next_card_label.config(text="No quedan más cartas en el mazo.")
 
@@ -42,7 +58,7 @@ ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "JOTA", "REYNA", "REY", "
 shuffle_deck()
 
 # Crear etiquetas y entrada de texto
-player_label = tk.Label(root, text="Número de Jugadores:")
+player_label = tk.Label(root, text="Número de Jugadores (2-4):")
 player_label.pack()
 player_entry = tk.Entry(root)
 player_entry.pack()

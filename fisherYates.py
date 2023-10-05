@@ -1,3 +1,4 @@
+import tkinter as tk
 from random import randrange
 
 def swap(A, i, j):
@@ -10,22 +11,42 @@ def shuffle(A):
         j = randrange(i, len(A))
         swap(A, i, j)
 
-if __name__ == '__main__':
-    # Crear un array vacío
-    datos = []
+def solicitar_datos():
+    ventana_solicitar = tk.Toplevel(ventana_principal)
+    ventana_solicitar.title("Ingresar Datos")
 
-    # Pedir al usuario la cantidad de datos que desea ingresar
-    num_datos = int(input("Ingrese la cantidad de datos que desea agregar: "))
+    etiqueta_num_datos = tk.Label(ventana_solicitar, text="Ingrese la cantidad de datos:")
+    etiqueta_num_datos.pack()
 
-    # Pedir al usuario ingresar los datos uno por uno
-    for i in range(num_datos):
-        dato = int(input(f"Ingrese el dato {i + 1}: "))
-        datos.append(dato)
+    entry_num_datos = tk.Entry(ventana_solicitar)
+    entry_num_datos.pack()
 
-    # Mezclar los datos aleatoriamente
-    shuffle(datos)
+    def ingresar_datos():
+        num_datos = int(entry_num_datos.get())
+        datos = []
 
-    # Imprimir los datos aleatorios
-    print("Datos aleatorios:")
-    for dato in datos:
-        print(dato)
+        for i in range(num_datos):
+            dato = int(input(f"Ingrese el dato {i + 1}: "))
+            datos.append(dato)
+
+        shuffle(datos)
+
+        ventana_resultado = tk.Toplevel(ventana_principal)
+        ventana_resultado.title("Datos Aleatorios")
+
+        resultado = tk.Label(ventana_resultado, text="Datos aleatorios:\n" + ", ".join(map(str, datos)))
+        resultado.pack()
+
+    boton_ingresar = tk.Button(ventana_solicitar, text="Ingresar Datos", command=ingresar_datos)
+    boton_ingresar.pack()
+
+# Crear una ventana principal
+ventana_principal = tk.Tk()
+ventana_principal.title("Generador de Datos Aleatorios")
+
+# Botón para solicitar datos
+boton_solicitar = tk.Button(ventana_principal, text="Solicitar Datos", command=solicitar_datos)
+boton_solicitar.pack()
+
+# Iniciar el bucle principal de Tkinter
+ventana_principal.mainloop()
