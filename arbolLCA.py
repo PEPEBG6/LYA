@@ -66,7 +66,9 @@ root.right.right.left.left=TreeNode("Arturo")
 root.right.right.right.left=TreeNode("Melchor")
 root.right.left.left.left.left=TreeNode("kimberli")
 root.right.left.left.left.right=TreeNode("Britani")
-root.right.left.left.right.left=
+root.right.left.left.right.left=TreeNode("Alex")
+root.right.left.left.right.right=TreeNode("Penelope")
+ 
 
 
 
